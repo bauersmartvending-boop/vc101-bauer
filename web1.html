@@ -17,6 +17,111 @@
   <!-- FontAwesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <!-- Lightbox CSS -->
+  <style>
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      padding: 20px;
+      overflow: auto;
+    }
+
+    .lightbox.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 100px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+      color: #22D3EE;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      padding: 10px 20px;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+
+    .lightbox-prev {
+      left: 20px;
+    }
+
+    .lightbox-next {
+      right: 20px;
+    }
+
+    .lightbox-nav:hover {
+      color: #22D3EE;
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    img[data-lightbox] {
+      cursor: zoom-in;
+      transition: transform 0.3s ease;
+    }
+
+    img[data-lightbox]:hover {
+      transform: scale(1.02);
+    }
+  </style>
+
   <script>
     tailwind.config = {
       theme: {
@@ -499,63 +604,135 @@
     <!-- About -->
     <section id="about" class="py-24 px-4">
       <div class="max-w-7xl mx-auto">
-        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-start">
+        <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-start">
           <div class="fade-up">
             <div class="section-label mb-5">About Brian</div>
             <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">系統分析、工程邏輯與 AI 應用的<span class="gradient-text">交會點</span></h2>
             <p class="mt-6 text-lg leading-9 text-slate-600 font-medium">
-              我是翁秉達 Brian Weng，目前任職於包爾科技股份有限公司，擔任系統分析師，擁有 6 年跨領域產業與技術實務經驗。我的職涯橫跨系統分析、全端工程、產品驗證、國際認證與數位內容開發，累積了從技術開發、檢測驗證到教育培訓的完整經驗。
+              我是翁秉達 Brian Weng，目前任職於包爾科技股份有限公司，擔任系統分析師，擁有 6 年跨領域產業與技術實務經驗。職涯橫跨系統分析、全端工程、產品驗證、國際認證與數位內容開發。
             </p>
             <p class="mt-4 text-lg leading-9 text-slate-600 font-medium">
-              我相信，好的系統不只是解決問題，更應該創造可持續擴展的價值。未來我將持續以專業、創新與可靠的態度，協助企業打造更智慧、更有效率的技術解決方案。
+              我相信，好的系統不只是解決問題，更應創造可持續擴展的價值。以專業、創新與可靠態度，協助企業打造智慧化物料管理解決方案。
             </p>
+
+            <div class="mt-10 grid sm:grid-cols-2 gap-4">
+              <div class="premium-card rounded-3xl p-6">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">核心專長</div>
+                <div class="mt-3 text-2xl font-black text-techBlue">AI 物料管理</div>
+                <p class="mt-2 text-slate-600 font-medium">流程自動化、庫存追蹤、數據決策。</p>
+              </div>
+              <div class="premium-card rounded-3xl p-6">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">實戰場景</div>
+                <div class="mt-3 text-2xl font-black text-premiumPurple">製造業現場</div>
+                <p class="mt-2 text-slate-600 font-medium">工具管理、資產追蹤與內訓實務。</p>
+              </div>
+            </div>
           </div>
 
-          <div class="fade-up grid sm:grid-cols-2 gap-4">
-            <div class="premium-card rounded-3xl p-6">
-              <div class="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-techBlue font-black mb-5">01</div>
-              <h3 class="text-xl font-black text-slate-900">6+ 年跨領域技術經驗</h3>
-              <p class="mt-3 leading-7 text-slate-600 font-medium">從全端工程、系統分析到產品驗證，具備理解企業流程與技術落地的實務能力。</p>
+          <div class="fade-up space-y-6">
+            <div class="premium-card rounded-3xl overflow-hidden border border-slate-200 shadow-soft">
+              <div class="relative overflow-hidden h-80 sm:h-96 group">
+                <img src="./mywork/圖片2.jpg" alt="Brian Weng - 系統分析師" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-lightbox="./mywork/圖片2.jpg">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <div class="text-white">
+                    <div class="text-xs uppercase tracking-widest text-white/80">點擊放大</div>
+                    <div class="text-lg font-black">Personal Photo</div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">個人檔案</div>
+                <h3 class="mt-3 text-2xl font-black text-slate-900">翁秉達 Brian Weng</h3>
+                <p class="mt-3 text-slate-600 leading-7 font-medium">AI 物料管理顧問 / 系統分析師</p>
+                <div class="mt-6 grid grid-cols-2 gap-4">
+                  <div class="rounded-3xl bg-blue-50 border border-blue-100 p-4">
+                    <div class="text-xs text-slate-500">經驗年數</div>
+                    <div class="mt-2 text-2xl font-black text-techBlue">6+</div>
+                  </div>
+                  <div class="rounded-3xl bg-purple-50 border border-purple-100 p-4">
+                    <div class="text-xs text-slate-500">認證項目</div>
+                    <div class="mt-2 text-2xl font-black text-premiumPurple">4+</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="premium-card rounded-3xl p-6">
-              <div class="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-premiumPurple font-black mb-5">02</div>
-              <h3 class="text-xl font-black text-slate-900">UL / FCC / CE / KC</h3>
-              <p class="mt-3 leading-7 text-slate-600 font-medium">曾主持多項國際認證取證工作，協助產品符合不同市場的法規與技術要求。</p>
-            </div>
-            <div class="premium-card rounded-3xl p-6">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-mint font-black mb-5">03</div>
-              <h3 class="text-xl font-black text-slate-900">系統分析 × 全端工程 × AI</h3>
-              <p class="mt-3 leading-7 text-slate-600 font-medium">以工程邏輯拆解需求，將流程、數據與 AI 應用轉化為可執行的專案規劃。</p>
-            </div>
-            <div class="premium-card rounded-3xl p-6">
-              <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-black mb-5">04</div>
-              <h3 class="text-xl font-black text-slate-900">工業物料管理實務</h3>
-              <p class="mt-3 leading-7 text-slate-600 font-medium">理解耗材領用、庫存不準、缺料風險與管理責任歸屬等企業現場痛點。</p>
+
+            <div class="glass rounded-[2rem] p-7 md:p-10">
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="rounded-3xl bg-white/70 border border-blue-100 p-5">
+                  <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Current Role</div>
+                  <div class="mt-2 text-lg font-black text-slate-900">系統分析師</div>
+                  <div class="mt-1 text-sm font-semibold text-slate-500">包爾科技股份有限公司</div>
+                </div>
+                <div class="rounded-3xl bg-white/70 border border-purple-100 p-5">
+                  <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Focus</div>
+                  <div class="mt-2 text-lg font-black text-slate-900">AI 物料管理</div>
+                  <div class="mt-1 text-sm font-semibold text-slate-500">流程自動化與數據分析</div>
+                </div>
+                <div class="rounded-3xl bg-white/70 border border-cyan-100 p-5">
+                  <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Tech Stack</div>
+                  <div class="mt-2 text-lg font-black text-slate-900">Python / Web / 3D</div>
+                  <div class="mt-1 text-sm font-semibold text-slate-500">工程與數位設計整合</div>
+                </div>
+                <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
+                  <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Belief</div>
+                  <div class="mt-2 text-lg font-black text-slate-900">可持續擴展</div>
+                  <div class="mt-1 text-sm font-semibold text-slate-500">讓系統創造長期價值</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="fade-up mt-12 glass rounded-[2rem] p-6 md:p-8">
-          <div class="grid md:grid-cols-4 gap-4">
-            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
-              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Current Role</div>
-              <div class="mt-2 text-lg font-black text-slate-900">系統分析師</div>
-              <div class="mt-1 text-sm font-semibold text-slate-500">包爾科技股份有限公司</div>
+        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-start mt-14">
+          <div class="fade-up">
+            <h3 class="text-2xl font-black text-slate-900 mb-6">核心能力</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="premium-card rounded-3xl p-6">
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-techBlue font-black mb-5">01</div>
+                <h3 class="text-lg font-black text-slate-900">跨領域技術經驗</h3>
+                <p class="mt-3 leading-7 text-slate-600 font-medium">全端工程、系統分析、產品驗證的完整實務能力。</p>
+              </div>
+              <div class="premium-card rounded-3xl p-6">
+                <div class="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-premiumPurple font-black mb-5">02</div>
+                <h3 class="text-lg font-black text-slate-900">國際認證專家</h3>
+                <p class="mt-3 leading-7 text-slate-600 font-medium">UL、FCC、CE、KC 等多國法規認證經驗。</p>
+              </div>
+              <div class="premium-card rounded-3xl p-6">
+                <div class="w-12 h-12 rounded-2xl bg-cyan-50 flex items-center justify-center text-mint font-black mb-5">03</div>
+                <h3 class="text-lg font-black text-slate-900">系統分析能力</h3>
+                <p class="mt-3 leading-7 text-slate-600 font-medium">工程邏輯、流程設計、可執行規劃轉化。</p>
+              </div>
+              <div class="premium-card rounded-3xl p-6">
+                <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-black mb-5">04</div>
+                <h3 class="text-lg font-black text-slate-900">物料管理實務</h3>
+                <p class="mt-3 leading-7 text-slate-600 font-medium">製造現場痛點、流程改善、數據驅動決策。</p>
+              </div>
             </div>
-            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
-              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Focus</div>
-              <div class="mt-2 text-lg font-black text-slate-900">AI 物料管理</div>
-              <div class="mt-1 text-sm font-semibold text-slate-500">流程自動化與數據分析</div>
-            </div>
-            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
-              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Tech Stack</div>
-              <div class="mt-2 text-lg font-black text-slate-900">Python / Web / 3D</div>
-              <div class="mt-1 text-sm font-semibold text-slate-500">工程與數位設計整合</div>
-            </div>
-            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
-              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Belief</div>
-              <div class="mt-2 text-lg font-black text-slate-900">可持續擴展</div>
-              <div class="mt-1 text-sm font-semibold text-slate-500">讓系統創造長期價值</div>
+          </div>
+
+          <div class="fade-up glass rounded-[2rem] p-7 md:p-10">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-3xl bg-white/70 border border-blue-100 p-5">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Current Role</div>
+                <div class="mt-2 text-lg font-black text-slate-900">系統分析師</div>
+                <div class="mt-1 text-sm font-semibold text-slate-500">包爾科技股份有限公司</div>
+              </div>
+              <div class="rounded-3xl bg-white/70 border border-purple-100 p-5">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Focus</div>
+                <div class="mt-2 text-lg font-black text-slate-900">AI 物料管理</div>
+                <div class="mt-1 text-sm font-semibold text-slate-500">流程自動化與數據分析</div>
+              </div>
+              <div class="rounded-3xl bg-white/70 border border-cyan-100 p-5">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Tech Stack</div>
+                <div class="mt-2 text-lg font-black text-slate-900">Python / Web / 3D</div>
+                <div class="mt-1 text-sm font-semibold text-slate-500">工程與數位設計整合</div>
+              </div>
+              <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Belief</div>
+                <div class="mt-2 text-lg font-black text-slate-900">可持續擴展</div>
+                <div class="mt-1 text-sm font-semibold text-slate-500">讓系統創造長期價值</div>
+              </div>
             </div>
           </div>
         </div>
@@ -629,6 +806,118 @@
               <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">降低缺料與重複採購風險</div>
               <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">將經驗管理轉為數據決策</div>
               <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">建立 AI 應用能力</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project & Training Gallery -->
+    <section id="gallery" class="py-24 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="fade-up max-w-3xl mx-auto text-center mb-14">
+          <div class="section-label mb-5">Experience Gallery</div>
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">實戰展演：從內訓到<span class="gradient-text">項目實踐</span></h2>
+          <p class="mt-6 text-lg leading-9 text-slate-600 font-medium">
+            透過實際的專案參與與內部培訓經驗，不斷精進技術能力、業務理解與團隊協作。這些場景記錄了 AI 物料管理解決方案如何落地製造現場。
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Gallery Item 1 -->
+          <div class="fade-up group premium-card rounded-3xl overflow-hidden">
+            <div class="relative h-72 bg-slate-200 overflow-hidden">
+              <img src="./mywork/0107-FCC.png" alt="項目場景1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-lightbox="./mywork/0107-FCC.png">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div class="text-white">
+                  <div class="text-sm font-black">項目實踐</div>
+                  <div class="text-xs text-cyan-300">工業現場應用</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery Item 2 -->
+          <div class="fade-up group premium-card rounded-3xl overflow-hidden">
+            <div class="relative h-72 bg-slate-200 overflow-hidden">
+              <img src="./mywork/圖片_20250509162647.jpg" alt="項目場景2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-lightbox="./mywork/圖片_20250509162647.jpg">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div class="text-white">
+                  <div class="text-sm font-black">內訓課程</div>
+                  <div class="text-xs text-cyan-300">知識傳遞與培訓</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery Item 3 -->
+          <div class="fade-up group premium-card rounded-3xl overflow-hidden">
+            <div class="relative h-72 bg-slate-200 overflow-hidden">
+              <img src="./mywork/圖片_20260212100128_5406_20.png" alt="智慧工具櫃" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-lightbox="./mywork/圖片_20260212100128_5406_20.png">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div class="text-white">
+                  <div class="text-sm font-black">產品展示</div>
+                  <div class="text-xs text-cyan-300">智慧工具櫃解決方案</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery Item 4 -->
+          <div class="fade-up group premium-card rounded-3xl overflow-hidden">
+            <div class="relative h-72 bg-slate-200 overflow-hidden">
+              <img src="./mywork/Locker.jpg" alt="工具櫃系統" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-lightbox="./mywork/Locker.jpg">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div class="text-white">
+                  <div class="text-sm font-black">硬體設施</div>
+                  <div class="text-xs text-cyan-300">智慧存儲系統</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery Item 5 -->
+          <div class="fade-up group premium-card rounded-3xl overflow-hidden">
+            <div class="relative h-72 bg-slate-200 overflow-hidden">
+              <img src="./mywork/mm bauer.jpg" alt="包爾科技實況" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-lightbox="./mywork/mm bauer.jpg">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div class="text-white">
+                  <div class="text-sm font-black">品牌活動</div>
+                  <div class="text-xs text-cyan-300">包爾科技展示會</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery Item 6 - Brand Design -->
+          <div class="fade-up group premium-card rounded-3xl overflow-hidden">
+            <div class="relative h-72 bg-gradient-to-br from-blue-100 via-purple-100 to-cyan-100 overflow-hidden flex items-center justify-center">
+              <div class="text-center">
+                <div class="text-6xl mb-4">🏭</div>
+                <div class="text-slate-900 font-black text-lg">製造業智慧化</div>
+                <div class="text-slate-600 font-medium text-sm mt-2">從現場到決策</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Context Card -->
+        <div class="fade-up mt-14 glass rounded-[2rem] p-7 md:p-10 border border-cyan-100/50">
+          <div class="grid md:grid-cols-3 gap-8">
+            <div>
+              <div class="text-4xl font-black text-techBlue mb-3">6+</div>
+              <div class="font-black text-slate-900">年跨領域項目經驗</div>
+              <p class="mt-2 text-sm text-slate-600 font-medium">涵蓋系統分析、工程開發、產品驗證與教育培訓等完整領域</p>
+            </div>
+            <div>
+              <div class="text-4xl font-black text-premiumPurple mb-3">4+</div>
+              <div class="font-black text-slate-900">國際認證專案</div>
+              <p class="mt-2 text-sm text-slate-600 font-medium">主持 UL、FCC、CE、KC 等多國法規認證工作</p>
+            </div>
+            <div>
+              <div class="text-4xl font-black text-mint mb-3">AI</div>
+              <div class="font-black text-slate-900">物料管理創新</div>
+              <p class="mt-2 text-sm text-slate-600 font-medium">深入製造現場，將複雜流程轉化為可執行的智慧解決方案</p>
             </div>
           </div>
         </div>
@@ -1072,6 +1361,92 @@
         window.scrollTo({ top, behavior: 'smooth' });
       });
     });
+
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    let currentImageIndex = -1;
+    let lightboxImages = [];
+
+    // Get all lightbox images
+    function initLightbox() {
+      lightboxImages = Array.from(document.querySelectorAll('[data-lightbox]'));
+    }
+
+    // Open lightbox
+    function openLightbox(img) {
+      lightboxImg.src = img.dataset.lightbox;
+      lightbox.classList.add('active');
+      currentImageIndex = lightboxImages.findIndex(item => item.dataset.lightbox === img.dataset.lightbox);
+      updateLightboxCounter();
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close lightbox
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Update counter
+    function updateLightboxCounter() {
+      const counter = document.querySelector('.lightbox-counter');
+      if (counter) {
+        counter.textContent = `${currentImageIndex + 1} / ${lightboxImages.length}`;
+      }
+    }
+
+    // Navigate images
+    function navigateImage(direction) {
+      currentImageIndex += direction;
+      if (currentImageIndex >= lightboxImages.length) currentImageIndex = 0;
+      if (currentImageIndex < 0) currentImageIndex = lightboxImages.length - 1;
+      lightboxImg.src = lightboxImages[currentImageIndex].dataset.lightbox;
+      updateLightboxCounter();
+    }
+
+    // Add click listeners to all lightbox images
+    function setupLightboxListeners() {
+      document.querySelectorAll('[data-lightbox]').forEach(img => {
+        img.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLightbox(img);
+        });
+      });
+    }
+
+    // Lightbox controls
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-prev').addEventListener('click', () => navigateImage(-1));
+    document.getElementById('lightbox-next').addEventListener('click', () => navigateImage(1));
+
+    // Close lightbox on background click
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateImage(-1);
+      if (e.key === 'ArrowRight') navigateImage(1);
+    });
+
+    // Initialize on page load
+    initLightbox();
+    setupLightboxListeners();
   </script>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+      <div class="lightbox-close" id="lightbox-close">&times;</div>
+      <img id="lightbox-img" src="" alt="放大圖片">
+      <div class="lightbox-prev" id="lightbox-prev">❮</div>
+      <div class="lightbox-next" id="lightbox-next">❯</div>
+      <div class="lightbox-counter"></div>
+    </div>
+  </div>
 </body>
 </html>
