@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI MV 製作招商網站｜用 AI 影像打造下一支爆款音樂影片</title>
+  <meta name="description" content="AI MV 製作招商網站，提供 AI 音樂影片、品牌形象短片、藝人宣傳視覺、YouTube/社群影音素材製作與合作招商服務。" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand-blue: #0866ff;
+      --brand-cyan: #22d3ee;
+      --brand-purple: #8b5cf6;
+      --dark: #050816;
+      --dark-2: #0b1020;
+      --text-soft: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--dark);
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .video-hero {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #050816;
+    }
+
+    .youtube-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      min-width: 177.78vh;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: -4;
+      border: 0;
+    }
+
+    .hero-gradient-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(8, 102, 255, 0.50), transparent 28%),
+        radial-gradient(circle at 80% 16%, rgba(139, 92, 246, 0.45), transparent 30%),
+        linear-gradient(90deg, rgba(5, 8, 22, 0.65) 0%, rgba(5, 8, 22, 0.50) 43%, rgba(5, 8, 22, 0.25) 100%),
+        linear-gradient(180deg, rgba(5, 8, 22, 0.15) 0%, rgba(5, 8, 22, 0.70) 100%);
+    }
+
+    .noise-layer {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, 0.58);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff 0%, #bfdbfe 35%, #67e8f9 68%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .blue-glow {
+      box-shadow: 0 0 0 1px rgba(8, 102, 255, 0.45), 0 18px 54px rgba(8, 102, 255, 0.35);
+    }
+
+    .section-bg {
+      background:
+        radial-gradient(circle at top left, rgba(8, 102, 255, 0.20), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.18), transparent 30%),
+        #050816;
+    }
+
+    .card-hover {
+      transition: transform .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-8px);
+      border-color: rgba(34, 211, 238, 0.46);
+      background: rgba(15, 23, 42, 0.78);
+      box-shadow: 0 24px 80px rgba(8, 102, 255, 0.18);
+    }
+
+    .marquee-track {
+      animation: marquee 28s linear infinite;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .pulse-dot {
+      position: relative;
+    }
+
+    .pulse-dot::after {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 211, 238, .55);
+      animation: pulse-ring 1.8s ease-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(.65); opacity: 1; }
+      100% { transform: scale(1.65); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .youtube-bg {
+        min-width: 240vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#050816]/70 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+      <a href="#top" class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#0866ff] font-black blue-glow">AI</span>
+        <span class="leading-tight">
+          <span class="block text-sm font-black tracking-[0.25em] text-white">AI MV STUDIO</span>
+          <span class="block text-xs text-slate-400">招商合作・音樂影像・品牌短片</span>
+        </span>
+      </a>
+
+      <nav class="hidden items-center gap-7 text-sm font-semibold text-slate-300 md:flex">
+        <a href="#services" class="hover:text-white">服務內容</a>
+        <a href="#value" class="hover:text-white">合作優勢</a>
+        <a href="#packages" class="hover:text-white">招商方案</a>
+        <a href="#process" class="hover:text-white">製作流程</a>
+      </nav>
+
+      <a href="#contact" class="rounded-full bg-white px-5 py-2.5 text-sm font-black text-[#050816] transition hover:bg-cyan-200">
+        立即洽談
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero with YouTube Background -->
+  <main id="top" class="video-hero">
+    <!--
+      YouTube 滿版背景設定重點：
+      1. autoplay=1：自動播放
+      2. mute=1：瀏覽器允許自動播放的必要條件
+      3. loop=1 + playlist=TZP_MRqvdns：讓 YouTube iframe 可重複播放
+      4. controls=0：隱藏控制列
+      5. playsinline=1：手機瀏覽器內嵌播放
+    -->
+    <iframe
+      class="youtube-bg"
+      src="https://www.youtube.com/embed/TZP_MRqvdns?autoplay=1&mute=1&loop=1&playlist=TZP_MRqvdns&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+      title="AI MV Background Video"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+    <div class="hero-gradient-overlay"></div>
+    <div class="noise-layer"></div>
+
+    <section class="relative mx-auto flex min-h-screen max-w-7xl items-center px-5 pb-20 pt-32 lg:px-8">
+      <div class="grid w-full items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <div class="mb-6 inline-flex items-center gap-3 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-bold text-cyan-100">
+            <span class="pulse-dot h-2.5 w-2.5 rounded-full bg-cyan-300"></span>
+            AI MV 製作招商計畫｜限量合作開放中
+          </div>
+
+          <h1 class="max-w-5xl text-5xl font-black leading-[1.05] tracking-tight md:text-7xl lg:text-8xl">
+            用 AI 影像，打造下一支
+            <span class="gradient-text block">爆款音樂 MV</span>
+          </h1>
+
+          <p class="mt-7 max-w-2xl text-lg leading-9 text-slate-200 md:text-xl">
+            我們結合 AI 影像生成、音樂情境設計、品牌敘事與短影音行銷，協助歌手、品牌、創作者與企業，用更快速度、更高視覺張力，完成具備傳播力的 AI MV 與宣傳影片。
+          </p>
+
+          <div class="mt-9 flex flex-col gap-4 sm:flex-row">
+            <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-[#0866ff] px-8 py-4 text-base font-black text-white blue-glow transition hover:-translate-y-1 hover:bg-blue-500">
+              我要洽談合作
+              <span class="ml-2">→</span>
+            </a>
+            <a href="#services" class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-4 text-base font-black text-white backdrop-blur transition hover:-translate-y-1 hover:bg-white/20">
+              查看製作服務
+            </a>
+          </div>
+
+          <div class="mt-10 grid max-w-2xl grid-cols-3 gap-3">
+            <div class="glass rounded-3xl p-4">
+              <div class="text-3xl font-black text-white">8s+</div>
+              <div class="mt-1 text-xs font-semibold text-slate-400">可拆分多段生成</div>
+            </div>
+            <div class="glass rounded-3xl p-4">
+              <div class="text-3xl font-black text-white">4K</div>
+              <div class="mt-1 text-xs font-semibold text-slate-400">高質感視覺輸出</div>
+            </div>
+            <div class="glass rounded-3xl p-4">
+              <div class="text-3xl font-black text-white">MV</div>
+              <div class="mt-1 text-xs font-semibold text-slate-400">音樂敘事腳本</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="glass rounded-[2rem] p-6 md:p-8">
+          <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+            <p class="text-sm font-black tracking-[0.25em] text-cyan-200">PARTNER BRIEF</p>
+            <h2 class="mt-4 text-3xl font-black leading-tight">招商合作對象</h2>
+            <div class="mt-6 space-y-4">
+              <div class="flex gap-4 rounded-2xl bg-white/5 p-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/20 text-xl">🎤</span>
+                <div>
+                  <h3 class="font-black">歌手 / 音樂人</h3>
+                  <p class="mt-1 text-sm leading-6 text-slate-300">打造新歌視覺、YouTube MV、社群宣傳短片。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 rounded-2xl bg-white/5 p-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-500/20 text-xl">🚀</span>
+                <div>
+                  <h3 class="font-black">品牌 / 活動單位</h3>
+                  <p class="mt-1 text-sm leading-6 text-slate-300">用音樂影像包裝產品、展會、活動與品牌故事。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 rounded-2xl bg-white/5 p-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-500/20 text-xl">🎬</span>
+                <div>
+                  <h3 class="font-black">創作者 / 影音團隊</h3>
+                  <p class="mt-1 text-sm leading-6 text-slate-300">共同開發 AI 影像風格、模板化流程與長期合作方案。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- Logo / Keywords Marquee -->
+  <section class="overflow-hidden border-y border-white/10 bg-[#070b18] py-5">
+    <div class="marquee-track flex w-[200%] gap-4 whitespace-nowrap text-sm font-black tracking-[0.2em] text-slate-400">
+      <div class="flex w-1/2 justify-around gap-4">
+        <span>AI MUSIC VIDEO</span><span>BRAND FILM</span><span>YOUTUBE MV</span><span>SHORT VIDEO</span><span>VISUAL STORYTELLING</span><span>GENERATIVE AI</span>
+      </div>
+      <div class="flex w-1/2 justify-around gap-4">
+        <span>AI MUSIC VIDEO</span><span>BRAND FILM</span><span>YOUTUBE MV</span><span>SHORT VIDEO</span><span>VISUAL STORYTELLING</span><span>GENERATIVE AI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="section-bg px-5 py-24 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl">
+        <p class="text-sm font-black tracking-[0.25em] text-cyan-300">SERVICES</p>
+        <h2 class="mt-4 text-4xl font-black leading-tight md:text-6xl">不只是做影片，而是打造可傳播的 AI 視覺資產</h2>
+        <p class="mt-5 text-lg leading-8 text-slate-300">從歌曲概念、分鏡腳本、AI 視覺風格、角色一致性、場景生成，到最終剪輯輸出，我們協助合作方把抽象想法變成能上架、能投放、能分享的作品。</p>
+      </div>
+
+      <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <article class="card-hover rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/20 text-3xl">🎵</div>
+          <h3 class="text-xl font-black">AI 音樂 MV</h3>
+          <p class="mt-4 leading-7 text-slate-300">依照歌曲情緒、歌詞意象與藝人風格，設計完整 MV 視覺主軸與分鏡。</p>
+        </article>
+
+        <article class="card-hover rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/20 text-3xl">📱</div>
+          <h3 class="text-xl font-black">社群短影音</h3>
+          <p class="mt-4 leading-7 text-slate-300">將 MV 拆解成 Reels、Shorts、TikTok 可用的預告片、高潮片段與宣傳素材。</p>
+        </article>
+
+        <article class="card-hover rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-500/20 text-3xl">🧠</div>
+          <h3 class="text-xl font-black">AI 視覺企劃</h3>
+          <p class="mt-4 leading-7 text-slate-300">建立人物、場景、色彩、鏡頭語言與世界觀，避免 AI 影片只有炫技沒有記憶點。</p>
+        </article>
+
+        <article class="card-hover rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-fuchsia-500/20 text-3xl">🤝</div>
+          <h3 class="text-xl font-black">招商聯名合作</h3>
+          <p class="mt-4 leading-7 text-slate-300">適合品牌置入、聯名主題曲、活動宣傳、展會影片與創作者長期內容合作。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value -->
+  <section id="value" class="bg-[#070b18] px-5 py-24 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div>
+        <p class="text-sm font-black tracking-[0.25em] text-cyan-300">WHY AI MV</p>
+        <h2 class="mt-4 text-4xl font-black leading-tight md:text-6xl">比傳統拍攝更快，比一般素材更有話題</h2>
+        <p class="mt-6 text-lg leading-9 text-slate-300">AI MV 的價值不是取代創意，而是放大創意。它能在有限預算內創造高密度視覺變化，讓音樂、品牌與故事有更多可測試、可擴散的版本。</p>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div class="glass rounded-[2rem] p-7">
+          <div class="text-5xl font-black text-cyan-200">01</div>
+          <h3 class="mt-5 text-2xl font-black">高視覺張力</h3>
+          <p class="mt-3 leading-7 text-slate-300">適合科幻、奇幻、未來城市、抽象情緒、虛擬角色等傳統拍攝成本高的場景。</p>
+        </div>
+        <div class="glass rounded-[2rem] p-7">
+          <div class="text-5xl font-black text-blue-200">02</div>
+          <h3 class="mt-5 text-2xl font-black">快速測試版本</h3>
+          <p class="mt-3 leading-7 text-slate-300">可先用短段落驗證風格、角色、節奏，再逐步擴展成完整 MV。</p>
+        </div>
+        <div class="glass rounded-[2rem] p-7">
+          <div class="text-5xl font-black text-purple-200">03</div>
+          <h3 class="mt-5 text-2xl font-black">適合社群擴散</h3>
+          <p class="mt-3 leading-7 text-slate-300">同一支作品可拆分成預告、花絮、直式短片、封面圖與活動素材。</p>
+        </div>
+        <div class="glass rounded-[2rem] p-7">
+          <div class="text-5xl font-black text-fuchsia-200">04</div>
+          <h3 class="mt-5 text-2xl font-black">品牌合作彈性</h3>
+          <p class="mt-3 leading-7 text-slate-300">可把品牌色、產品符號、活動主題自然融入 MV 世界觀，降低硬置入感。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section id="packages" class="section-bg px-5 py-24 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-sm font-black tracking-[0.25em] text-cyan-300">PACKAGES</p>
+        <h2 class="mt-4 text-4xl font-black leading-tight md:text-6xl">招商合作方案</h2>
+        <p class="mt-5 text-lg leading-8 text-slate-300">可依照歌曲長度、生成段落數、角色複雜度、後製剪輯與商業授權需求客製化。</p>
+      </div>
+
+      <div class="mt-14 grid gap-6 lg:grid-cols-3">
+        <article class="card-hover rounded-[2rem] border border-white/10 bg-white/[0.04] p-8">
+          <p class="text-sm font-black tracking-[0.2em] text-slate-400">STARTER</p>
+          <h3 class="mt-3 text-3xl font-black">概念短片方案</h3>
+          <p class="mt-4 leading-7 text-slate-300">適合先測試 AI MV 風格、發佈新歌前導預告或社群短片。</p>
+          <ul class="mt-7 space-y-3 text-sm text-slate-300">
+            <li>✓ 15–30 秒 AI 視覺短片</li>
+            <li>✓ 基礎分鏡與視覺風格設定</li>
+            <li>✓ 社群直式 / 橫式輸出</li>
+          </ul>
+          <a href="#contact" class="mt-8 inline-flex w-full justify-center rounded-full border border-white/20 px-6 py-3 font-black hover:bg-white hover:text-[#050816]">詢問報價</a>
+        </article>
+
+        <article class="card-hover relative rounded-[2rem] border border-cyan-300/50 bg-cyan-300/[0.08] p-8 blue-glow">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-cyan-300 px-5 py-2 text-xs font-black tracking-[0.18em] text-[#050816]">RECOMMENDED</div>
+          <p class="text-sm font-black tracking-[0.2em] text-cyan-200">PRODUCTION</p>
+          <h3 class="mt-3 text-3xl font-black">完整 MV 製作方案</h3>
+          <p class="mt-4 leading-7 text-slate-200">適合正式發佈 YouTube MV、藝人作品集、品牌聯名主題曲。</p>
+          <ul class="mt-7 space-y-3 text-sm text-slate-200">
+            <li>✓ 完整歌曲視覺企劃</li>
+            <li>✓ 分段生成與剪輯後製</li>
+            <li>✓ 封面圖 / 宣傳短片素材</li>
+            <li>✓ 商業使用需求討論</li>
+          </ul>
+          <a href="#contact" class="mt-8 inline-flex w-full justify-center rounded-full bg-[#0866ff] px-6 py-3 font-black text-white hover:bg-blue-500">洽談合作</a>
+        </article>
+
+        <article class="card-hover rounded-[2rem] border border-white/10 bg-white/[0.04] p-8">
+          <p class="text-sm font-black tracking-[0.2em] text-slate-400">BRAND</p>
+          <h3 class="mt-3 text-3xl font-black">品牌招商聯名方案</h3>
+          <p class="mt-4 leading-7 text-slate-300">適合企業品牌、展會活動、產品上市、跨界合作與長期內容製作。</p>
+          <ul class="mt-7 space-y-3 text-sm text-slate-300">
+            <li>✓ 品牌視覺置入設計</li>
+            <li>✓ 活動 / 產品故事腳本</li>
+            <li>✓ 多平台素材包</li>
+            <li>✓ 長期合作專案規劃</li>
+          </ul>
+          <a href="#contact" class="mt-8 inline-flex w-full justify-center rounded-full border border-white/20 px-6 py-3 font-black hover:bg-white hover:text-[#050816]">預約提案</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process" class="bg-[#070b18] px-5 py-24 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl">
+        <p class="text-sm font-black tracking-[0.25em] text-cyan-300">PROCESS</p>
+        <h2 class="mt-4 text-4xl font-black leading-tight md:text-6xl">從一首歌，到一個可招商的影像企劃</h2>
+      </div>
+
+      <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+        <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <span class="text-sm font-black text-cyan-300">STEP 01</span>
+          <h3 class="mt-4 text-xl font-black">需求訪談</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-300">確認歌曲風格、目標受眾、預算範圍與發佈平台。</p>
+        </div>
+        <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <span class="text-sm font-black text-cyan-300">STEP 02</span>
+          <h3 class="mt-4 text-xl font-black">視覺企劃</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-300">建立世界觀、色彩語言、角色設定與分鏡方向。</p>
+        </div>
+        <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <span class="text-sm font-black text-cyan-300">STEP 03</span>
+          <h3 class="mt-4 text-xl font-black">AI 生成</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-300">分段生成影片素材，並逐步修正角色、場景與鏡頭節奏。</p>
+        </div>
+        <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <span class="text-sm font-black text-cyan-300">STEP 04</span>
+          <h3 class="mt-4 text-xl font-black">剪輯後製</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-300">依音樂節奏剪輯，加入字幕、轉場、調色與片頭片尾。</p>
+        </div>
+        <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <span class="text-sm font-black text-cyan-300">STEP 05</span>
+          <h3 class="mt-4 text-xl font-black">素材交付</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-300">輸出 MV 正片、社群短片、封面圖與招商使用版本。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio / 作品集展示區塊 -->
+  <section class="bg-[#070b18] px-5 py-24 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl">
+        <p class="text-sm font-black tracking-[0.25em] text-cyan-300">PORTFOLIO</p>
+        <h2 class="mt-4 text-4xl font-black leading-tight md:text-6xl">作品集展示</h2>
+        <p class="mt-5 text-lg leading-8 text-slate-300">精選製作作品，展現我們的影像風格與創意呈現。</p>
+      </div>
+
+      <div class="mt-14 grid gap-8 md:grid-cols-3">
+        <!-- 作品1: VOBO皮鞋 -->
+        <div class="group rounded-[2rem] border border-white/10 bg-white/[0.04] overflow-hidden transition hover:border-cyan-300/50 hover:bg-cyan-300/[0.08]">
+          <div class="relative w-full aspect-video bg-black rounded-[2rem] overflow-hidden">
+            <iframe
+              class="w-full h-full"
+              src="https://www.youtube.com/embed/h7hM5BlOcMY?autoplay=1&mute=1&loop=1&playlist=h7hM5BlOcMY&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+              title="VOBO皮鞋"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-black text-white">VOBO皮鞋</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">展現品牌質感與產品特色的視覺呈現。</p>
+          </div>
+        </div>
+
+        <!-- 作品2: SHARK 鯊克防水鞋 -->
+        <div class="group rounded-[2rem] border border-white/10 bg-white/[0.04] overflow-hidden transition hover:border-cyan-300/50 hover:bg-cyan-300/[0.08]">
+          <div class="relative w-full aspect-video bg-black rounded-[2rem] overflow-hidden">
+            <iframe
+              class="w-full h-full"
+              src="https://www.youtube.com/embed/bcFnNsTVntk?autoplay=1&mute=1&loop=1&playlist=bcFnNsTVntk&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+              title="SHARK 鯊克防水鞋"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-black text-white">SHARK 鯊克防水鞋</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">功能性與設計感完美結合的產品展示。</p>
+          </div>
+        </div>
+
+        <!-- 作品3: 黑武士鞋 -->
+        <div class="group rounded-[2rem] border border-white/10 bg-white/[0.04] overflow-hidden transition hover:border-cyan-300/50 hover:bg-cyan-300/[0.08]">
+          <div class="relative w-full aspect-video bg-black rounded-[2rem] overflow-hidden">
+            <iframe
+              class="w-full h-full"
+              src="https://www.youtube.com/embed/n9VTjZdNvEQ?autoplay=1&mute=1&loop=1&playlist=n9VTjZdNvEQ&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+              title="黑武士鞋"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-black text-white">黑武士鞋</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">強勢風格的視覺衝擊與品牌辨識度呈現。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT (Google Form integrated) -->
+  <section id="contact" class="relative overflow-hidden px-5 py-24 lg:px-8">
+    <div class="absolute inset-0 -z-10 bg-[#050816]"></div>
+    <div class="absolute left-1/2 top-1/2 -z-10 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0866ff]/30 blur-[120px]"></div>
+
+    <div class="mx-auto max-w-5xl rounded-[2.5rem] border border-white/10 bg-white/[0.06] p-8 text-center backdrop-blur-xl md:p-14">
+      <p class="text-sm font-black tracking-[0.25em] text-cyan-300">CONTACT</p>
+      <h2 class="mt-4 text-4xl font-black leading-tight md:text-6xl">聯絡我 / 合作洽詢</h2>
+      <p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-slate-300">請留下您的基本資料與需求，我們會在最快時間與您聯繫。</p>
+
+      <!-- Hidden iframe for silent submission -->
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+      <!-- Form posts to Google Forms formResponse endpoint (no redirect thanks to hidden iframe) -->
+      <form id="gform" class="mx-auto mt-10 grid max-w-3xl gap-4 text-left md:grid-cols-2" method="POST" target="hidden_iframe" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGKDercximv5gfGezIA28scuWvOYFLq8-Plj1V_Bp6pNLCqQ/formResponse" onsubmit="submitGForm(event)">
+        <!-- Map fields to Google Form entry IDs (extracted from original source) -->
+        <input type="text" name="entry.1828672223" id="g_name" class="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-white outline-none placeholder:text-slate-500 focus:border-cyan-300" placeholder="姓名 / 單位" required>
+        <input type="email" name="entry.267269794" id="g_email" class="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-white outline-none placeholder:text-slate-500 focus:border-cyan-300" placeholder="Email" required>
+        <input type="text" name="entry.98510672" id="g_type" class="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-white outline-none placeholder:text-slate-500 focus:border-cyan-300 md:col-span-2" placeholder="企劃類型：AI MV / 品牌影片 / 活動招商 / 其他">
+        <textarea name="entry.663583590" id="g_message" class="min-h-36 rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-white outline-none placeholder:text-slate-500 focus:border-cyan-300 md:col-span-2" placeholder="需求簡述：請簡單描述歌曲風格、影片用途、希望長度、預計上線時間或招商想法"></textarea>
+
+        <!-- Hidden fields copied from original Google form to improve compatibility -->
+        <input type="hidden" name="fvv" value="1">
+        <input type="hidden" name="pageHistory" value="0">
+        <input type="hidden" name="fbzx" value="3394376336420870433">
+
+        <button id="gform-submit" class="rounded-full bg-[#0866ff] px-8 py-4 text-base font-black text-white blue-glow transition hover:-translate-y-1 hover:bg-blue-500 md:col-span-2" type="submit">
+          送出合作需求
+        </button>
+      </form>
+
+      <!-- Modal (custom success message) -->
+      <div id="gform-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40">
+        <div class="w-full max-w-lg rounded-2xl bg-[#071025] border border-white/10 p-8 text-center">
+          <h3 class="text-2xl font-black text-white">需求已送出，我們將盡快與您聯絡！</h3>
+          <p class="mt-3 text-slate-300">感謝您的信任，若需緊急聯繫可同時寄信至 bauersmartvending@gmail.com</p>
+          <div class="mt-6 flex justify-center">
+            <button id="gform-modal-close" class="rounded-full bg-white px-6 py-3 font-black text-[#050816]">關閉</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 bg-[#030712] px-5 py-8 text-center text-sm text-slate-500 lg:px-8">
+    <p>© 2026 AI MV Studio. Built for AI Music Video Partnership Landing Page.</p>
+  </footer>
+
+  <script>
+    // Header background enhancement on scroll
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        header.style.background = 'rgba(5, 8, 22, 0.92)';
+      } else {
+        header.style.background = 'rgba(5, 8, 22, 0.70)';
+      }
+    });
+  </script>
+  <script>
+    // Google Form silent submit via hidden iframe and custom modal
+    function submitGForm(e) {
+      e.preventDefault();
+      const form = document.getElementById('gform');
+      const submitBtn = document.getElementById('gform-submit');
+      const iframe = document.getElementById('hidden_iframe');
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = '傳送中...';
+
+      // Listen for iframe load to detect completion (Google returns a response page)
+      const onload = function() {
+        // slight delay to ensure form processed
+        setTimeout(() => {
+          showGFormModal();
+          form.reset();
+          submitBtn.disabled = false;
+          submitBtn.innerText = '送出合作需求';
+        }, 300);
+        iframe.removeEventListener('load', onload);
+      };
+
+      iframe.addEventListener('load', onload);
+      // Submit the form to the hidden iframe
+      form.submit();
+    }
+
+    function showGFormModal() {
+      const modal = document.getElementById('gform-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function hideGFormModal() {
+      const modal = document.getElementById('gform-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const closeBtn = document.getElementById('gform-modal-close');
+      if (closeBtn) closeBtn.addEventListener('click', hideGFormModal);
+
+      // Also close modal on background click
+      const modal = document.getElementById('gform-modal');
+      modal && modal.addEventListener('click', (e) => {
+        if (e.target === modal) hideGFormModal();
+      });
+    });
+  </script>
+</body>
+</html>
