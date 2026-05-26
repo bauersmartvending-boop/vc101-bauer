@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="翁秉達 Brian Weng｜AI 科技物料管理與工業流程自動化顧問，協助企業透過智慧化領料、自動化管控與數據分析，建立更精準、更透明、更高效的物料管理流程。" />
+  <title>Brian Weng｜AI Material Management Consultant</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans TC', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            techBlue: '#0866FF',
+            premiumPurple: '#0B3B8C',
+            mint: '#22D3EE',
+            ink: '#0f172a',
+            graphite: '#64748B',
+          },
+          boxShadow: {
+            glow: '0 24px 80px rgba(8, 102, 255, 0.18)',
+            soft: '0 20px 60px rgba(15, 23, 42, 0.08)',
+            mint: '0 20px 60px rgba(34, 211, 238, 0.22)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --blue: #0866FF;
+      --purple: #0B3B8C;
+      --mint: #22D3EE;
+      --ink: #0f172a;
+      --graphite: #64748B;
+      --line: rgba(8, 102, 255, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(8, 102, 255, 0.12), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(11, 59, 140, 0.10), transparent 30%),
+        radial-gradient(circle at 50% 92%, rgba(34, 211, 238, 0.10), transparent 26%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 45%, #ffffff 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(8, 102, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 102, 255, 0.055) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.2), rgba(0,0,0,0.72));
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, transparent 0%, rgba(8,102,255,0.07) 20%, transparent 38%),
+        linear-gradient(250deg, transparent 0%, rgba(11,59,140,0.06) 25%, transparent 52%);
+      animation: auraFlow 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes auraFlow {
+      from { transform: translate3d(-1.5%, -1%, 0) scale(1); opacity: .72; }
+      to { transform: translate3d(1.5%, 1%, 0) scale(1.04); opacity: 1; }
+    }
+
+    .noise-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.55;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.07);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .premium-card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+
+    .premium-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .35s ease;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(8, 102, 255, 0.14), rgba(11, 59, 140, 0.09), rgba(34, 211, 238, 0.10));
+    }
+
+    .premium-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(8, 102, 255, 0.42);
+      box-shadow: 0 28px 80px rgba(8, 102, 255, 0.16);
+    }
+
+    .premium-card:hover::before {
+      opacity: 1;
+    }
+
+    .premium-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #0866FF 0%, #0B3B8C 52%, #22D3EE 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      position: relative;
+      overflow: hidden;
+      transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease, color .28s ease;
+    }
+
+    .btn-primary::after,
+    .btn-secondary::after {
+      content: 'Status: Ready to Connect';
+      position: absolute;
+      left: 50%;
+      bottom: -30px;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 10px;
+      letter-spacing: .08em;
+      font-weight: 800;
+      color: #06733a;
+      opacity: 0;
+      transition: bottom .28s ease, opacity .28s ease;
+      text-transform: uppercase;
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      border-color: rgba(34, 211, 238, .7);
+      box-shadow: 0 18px 48px rgba(34, 211, 238, 0.22);
+      background: rgba(236, 254, 255, .94);
+      color: #06733a;
+    }
+
+    .btn-primary:hover span,
+    .btn-secondary:hover span {
+      transform: translateY(-9px);
+    }
+
+    .btn-primary span,
+    .btn-secondary span {
+      display: inline-flex;
+      transition: transform .28s ease;
+    }
+
+    .btn-primary:hover::after,
+    .btn-secondary:hover::after {
+      bottom: 10px;
+      opacity: 1;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .floating-node {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(8, 102, 255, .42);
+      box-shadow: 0 0 24px rgba(8, 102, 255, .24);
+      animation: floatNode 6s ease-in-out infinite;
+    }
+
+    .floating-node:nth-child(2) { animation-delay: -1s; background: rgba(11, 59, 140, .38); }
+    .floating-node:nth-child(3) { animation-delay: -2s; background: rgba(34, 211, 238, .42); }
+    .floating-node:nth-child(4) { animation-delay: -3s; }
+    .floating-node:nth-child(5) { animation-delay: -4s; background: rgba(124, 58, 237, .34); }
+
+    @keyframes floatNode {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: .52; }
+      50% { transform: translate3d(12px, -18px, 0) scale(1.15); opacity: .96; }
+    }
+
+    .data-line {
+      stroke-dasharray: 8 12;
+      animation: dashMove 9s linear infinite;
+    }
+
+    @keyframes dashMove {
+      to { stroke-dashoffset: -120; }
+    }
+
+    .type-caret {
+      border-right: 2px solid #0866FF;
+      padding-right: 4px;
+      animation: blink .85s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #0866FF; }
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0866FF, #0B3B8C, #22D3EE);
+      transition: width .25s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(8, 102, 255, .08);
+      color: #0866FF;
+      border: 1px solid rgba(8, 102, 255, .18);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22D3EE;
+      box-shadow: 0 0 18px rgba(34, 211, 238, .65);
+    }
+
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+
+    .mobile-menu.open {
+      max-height: 420px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise-layer"></div>
+
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+    <nav class="glass max-w-7xl mx-auto rounded-2xl px-4 md:px-6 py-3">
+      <div class="flex items-center justify-between gap-4">
+        <a href="#home" class="flex items-center gap-3 group" aria-label="Back to home">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-techBlue via-premiumPurple to-mint flex items-center justify-center text-white font-black shadow-glow group-hover:scale-105 transition-transform" style="background: linear-gradient(to bottom right, #0866FF, #0B3B8C, #22D3EE);">B</div>
+          <div>
+            <div class="text-sm md:text-base font-black tracking-tight text-ink">Brian Weng</div>
+            <div class="text-[11px] md:text-xs text-slate-500 font-semibold">AI Material Management</div>
+          </div>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-7 text-sm font-bold text-slate-600">
+          <a class="nav-link hover:text-techBlue" href="#home">首頁</a>
+          <a class="nav-link hover:text-techBlue" href="#about">關於 Brian</a>
+          <a class="nav-link hover:text-techBlue" href="#services">AI 解決方案</a>
+          <a class="nav-link hover:text-techBlue" href="#cases">實戰案例</a>
+          <a class="nav-link hover:text-techBlue" href="#insights">技術觀點</a>
+          <a class="px-4 py-2 rounded-xl bg-white/70 border border-blue-200 text-techBlue hover:border-mint hover:text-emerald-700 hover:shadow-mint transition-all" href="#contact">預約諮詢</a>
+        </div>
+
+        <button id="menuBtn" class="lg:hidden w-11 h-11 rounded-xl border border-slate-200 bg-white/70 flex items-center justify-center text-slate-700" aria-label="Open mobile menu">
+          <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="mobileMenu" class="mobile-menu lg:hidden">
+        <div class="grid gap-2 pt-4 text-sm font-bold text-slate-600">
+          <a class="mobile-link px-3 py-3 rounded-xl hover:bg-blue-50 hover:text-techBlue" href="#home">首頁</a>
+          <a class="mobile-link px-3 py-3 rounded-xl hover:bg-blue-50 hover:text-techBlue" href="#about">關於 Brian</a>
+          <a class="mobile-link px-3 py-3 rounded-xl hover:bg-blue-50 hover:text-techBlue" href="#services">AI 解決方案</a>
+          <a class="mobile-link px-3 py-3 rounded-xl hover:bg-blue-50 hover:text-techBlue" href="#cases">實戰案例</a>
+          <a class="mobile-link px-3 py-3 rounded-xl hover:bg-blue-50 hover:text-techBlue" href="#insights">技術觀點</a>
+          <a class="mobile-link px-3 py-3 rounded-xl bg-blue-50 text-techBlue" href="#contact">預約諮詢</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="relative min-h-screen flex items-center pt-32 pb-20 px-4 overflow-hidden">
+      <div class="absolute top-24 left-[7%] floating-node"></div>
+      <div class="absolute top-44 right-[11%] floating-node"></div>
+      <div class="absolute bottom-24 left-[18%] floating-node"></div>
+      <div class="absolute bottom-36 right-[28%] floating-node"></div>
+      <div class="absolute top-[52%] left-[47%] floating-node"></div>
+
+      <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
+        <div class="fade-up">
+          <div class="section-label mb-7">Enterprise AI Consultant Website</div>
+          <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] text-ink">
+            讓物料管理不再只是庫存紀錄，<br class="hidden md:block" />而是企業效率提升的<span class="gradient-text">起點</span>
+          </h1>
+          <p class="mt-7 text-lg md:text-xl leading-9 text-slate-600 max-w-2xl font-medium">
+            透過智慧化領料、自動化管控與數據分析，協助企業即時掌握耗材流向、降低浪費與缺料風險，打造更精準、更透明、更高效的物料管理流程。
+          </p>
+
+          <div class="mt-7 glass inline-flex max-w-full rounded-2xl px-4 py-3 text-sm md:text-base font-extrabold text-slate-700 border-blue-100">
+            <span class="text-techBlue mr-2">AI Vision:</span>
+            <span id="typewriter" class="type-caret whitespace-normal"></span>
+          </div>
+
+          <div class="mt-9 flex flex-col sm:flex-row gap-4">
+            <a href="https://calendar.app.google/iko9UDFH4o5BvKEm9" target="_blank" rel="noopener" class="btn-primary min-h-[58px] inline-flex items-center justify-center rounded-2xl border border-blue-300 bg-white/85 px-7 py-4 text-techBlue font-black shadow-soft">
+              <span>預約 AI 物料管理諮詢</span>
+            </a>
+            <a href="#services" class="btn-secondary min-h-[58px] inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white/60 px-7 py-4 text-slate-700 font-black shadow-soft">
+              <span>查看解決方案</span>
+            </a>
+          </div>
+
+          <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl">
+            <div class="glass rounded-2xl p-4">
+              <div class="text-2xl font-black text-techBlue">6+</div>
+              <div class="text-xs font-bold text-slate-500 mt-1">跨領域技術經驗</div>
+            </div>
+            <div class="glass rounded-2xl p-4">
+              <div class="text-2xl font-black text-premiumPurple">4+</div>
+              <div class="text-xs font-bold text-slate-500 mt-1">國際認證經驗</div>
+            </div>
+            <div class="glass rounded-2xl p-4">
+              <div class="text-2xl font-black text-mint">AI</div>
+              <div class="text-xs font-bold text-slate-500 mt-1">流程賦能</div>
+            </div>
+            <div class="glass rounded-2xl p-4">
+              <div class="text-2xl font-black text-slate-800">MRO</div>
+              <div class="text-xs font-bold text-slate-500 mt-1">物料管理實務</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up relative">
+          <div class="absolute -inset-8 bg-gradient-to-br from-blue-200/40 via-purple-200/30 to-emerald-200/35 blur-3xl rounded-full"></div>
+
+          <div class="relative glass rounded-[2rem] p-5 md:p-7 shadow-glow border-blue-100">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <div class="text-sm font-black text-slate-800">AI Material Intelligence</div>
+                <div class="text-xs font-bold text-slate-400 mt-1">Live Operation Dashboard</div>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-black text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-2 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-mint animate-pulse"></span> ONLINE
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-5">
+              <div class="rounded-3xl bg-white/72 border border-blue-100 p-5">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Waste Risk</div>
+                <div class="mt-3 text-3xl font-black text-techBlue">-32%</div>
+                <div class="mt-3 h-2 rounded-full bg-slate-100 overflow-hidden">
+                  <div class="h-full w-[68%] rounded-full bg-gradient-to-r from-techBlue to-mint"></div>
+                </div>
+              </div>
+              <div class="rounded-3xl bg-white/72 border border-purple-100 p-5">
+                <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Forecast</div>
+                <div class="mt-3 text-3xl font-black text-premiumPurple">91%</div>
+                <div class="mt-3 h-2 rounded-full bg-slate-100 overflow-hidden">
+                  <div class="h-full w-[91%] rounded-full bg-gradient-to-r from-premiumPurple to-techBlue"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-3xl bg-white/72 border border-slate-100 p-4 md:p-6 overflow-hidden">
+              <div class="flex items-center justify-between mb-5">
+                <div class="font-black text-slate-800">Material Flow Map</div>
+                <div class="text-xs font-bold text-slate-400">Node-based Insight</div>
+              </div>
+
+              <svg class="w-full h-64" viewBox="0 0 520 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Abstract AI data flow visualization">
+                <defs>
+                  <linearGradient id="lineGradient" x1="0" y1="0" x2="520" y2="280" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#0866FF" stop-opacity="0.75"/>
+                    <stop offset="0.52" stop-color="#0B3B8C" stop-opacity="0.55"/>
+                    <stop offset="1" stop-color="#22D3EE" stop-opacity="0.72"/>
+                  </linearGradient>
+                  <filter id="blurGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <path class="data-line" d="M42 213 C96 112, 146 89, 214 132 C276 172, 302 48, 389 67 C449 80, 458 160, 489 110" stroke="url(#lineGradient)" stroke-width="3" stroke-linecap="round"/>
+                <path class="data-line" d="M57 76 C108 147, 153 184, 220 164 C283 146, 313 211, 379 204 C436 198, 463 163, 493 199" stroke="url(#lineGradient)" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+                <path d="M78 235 L171 71 L261 221 L357 92 L467 223" stroke="rgba(15,23,42,.08)" stroke-width="1.5"/>
+
+                <g filter="url(#blurGlow)">
+                  <circle cx="42" cy="213" r="12" fill="#0866FF" fill-opacity="0.9"/>
+                  <circle cx="214" cy="132" r="15" fill="#0B3B8C" fill-opacity="0.82"/>
+                  <circle cx="389" cy="67" r="12" fill="#22D3EE" fill-opacity="0.84"/>
+                  <circle cx="489" cy="110" r="10" fill="#0866FF" fill-opacity="0.72"/>
+                  <circle cx="57" cy="76" r="9" fill="#22D3EE" fill-opacity="0.78"/>
+                  <circle cx="379" cy="204" r="13" fill="#0B3B8C" fill-opacity="0.78"/>
+                </g>
+
+                <g class="text-[10px] font-bold" fill="#64748b">
+                  <text x="18" y="248">領料</text>
+                  <text x="188" y="111">耗材</text>
+                  <text x="365" y="47">預測</text>
+                  <text x="455" y="91">決策</text>
+                  <text x="352" y="238">庫存</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-3 mt-5 text-xs font-bold text-slate-500">
+              <div class="rounded-2xl bg-blue-50/80 border border-blue-100 p-4">消耗趨勢分析</div>
+              <div class="rounded-2xl bg-purple-50/80 border border-purple-100 p-4">異常領用偵測</div>
+              <div class="rounded-2xl bg-emerald-50/80 border border-emerald-100 p-4">採購預測輔助</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-start">
+          <div class="fade-up">
+            <div class="section-label mb-5">About Brian</div>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">系統分析、工程邏輯與 AI 應用的<span class="gradient-text">交會點</span></h2>
+            <p class="mt-6 text-lg leading-9 text-slate-600 font-medium">
+              我是翁秉達 Brian Weng，目前任職於包爾科技股份有限公司，擔任系統分析師，擁有 6 年跨領域產業與技術實務經驗。我的職涯橫跨系統分析、全端工程、產品驗證、國際認證與數位內容開發，累積了從技術開發、檢測驗證到教育培訓的完整經驗。
+            </p>
+            <p class="mt-4 text-lg leading-9 text-slate-600 font-medium">
+              我相信，好的系統不只是解決問題，更應該創造可持續擴展的價值。未來我將持續以專業、創新與可靠的態度，協助企業打造更智慧、更有效率的技術解決方案。
+            </p>
+          </div>
+
+          <div class="fade-up grid sm:grid-cols-2 gap-4">
+            <div class="premium-card rounded-3xl p-6">
+              <div class="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-techBlue font-black mb-5">01</div>
+              <h3 class="text-xl font-black text-slate-900">6+ 年跨領域技術經驗</h3>
+              <p class="mt-3 leading-7 text-slate-600 font-medium">從全端工程、系統分析到產品驗證，具備理解企業流程與技術落地的實務能力。</p>
+            </div>
+            <div class="premium-card rounded-3xl p-6">
+              <div class="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-premiumPurple font-black mb-5">02</div>
+              <h3 class="text-xl font-black text-slate-900">UL / FCC / CE / KC</h3>
+              <p class="mt-3 leading-7 text-slate-600 font-medium">曾主持多項國際認證取證工作，協助產品符合不同市場的法規與技術要求。</p>
+            </div>
+            <div class="premium-card rounded-3xl p-6">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-mint font-black mb-5">03</div>
+              <h3 class="text-xl font-black text-slate-900">系統分析 × 全端工程 × AI</h3>
+              <p class="mt-3 leading-7 text-slate-600 font-medium">以工程邏輯拆解需求，將流程、數據與 AI 應用轉化為可執行的專案規劃。</p>
+            </div>
+            <div class="premium-card rounded-3xl p-6">
+              <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-700 font-black mb-5">04</div>
+              <h3 class="text-xl font-black text-slate-900">工業物料管理實務</h3>
+              <p class="mt-3 leading-7 text-slate-600 font-medium">理解耗材領用、庫存不準、缺料風險與管理責任歸屬等企業現場痛點。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up mt-12 glass rounded-[2rem] p-6 md:p-8">
+          <div class="grid md:grid-cols-4 gap-4">
+            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
+              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Current Role</div>
+              <div class="mt-2 text-lg font-black text-slate-900">系統分析師</div>
+              <div class="mt-1 text-sm font-semibold text-slate-500">包爾科技股份有限公司</div>
+            </div>
+            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
+              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Focus</div>
+              <div class="mt-2 text-lg font-black text-slate-900">AI 物料管理</div>
+              <div class="mt-1 text-sm font-semibold text-slate-500">流程自動化與數據分析</div>
+            </div>
+            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
+              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Tech Stack</div>
+              <div class="mt-2 text-lg font-black text-slate-900">Python / Web / 3D</div>
+              <div class="mt-1 text-sm font-semibold text-slate-500">工程與數位設計整合</div>
+            </div>
+            <div class="rounded-3xl bg-white/70 border border-slate-100 p-5">
+              <div class="text-xs font-black text-slate-400 uppercase tracking-wider">Belief</div>
+              <div class="mt-2 text-lg font-black text-slate-900">可持續擴展</div>
+              <div class="mt-1 text-sm font-semibold text-slate-500">讓系統創造長期價值</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 px-4 relative">
+      <div class="max-w-7xl mx-auto">
+        <div class="fade-up max-w-3xl mx-auto text-center">
+          <div class="section-label mb-5">AI Solutions</div>
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">讓企業從人工管理，升級為<span class="gradient-text">數據決策系統</span></h2>
+          <p class="mt-6 text-lg leading-9 text-slate-600 font-medium">
+            以企業實際營運需求為核心，協助企業從傳統物料管理模式，逐步升級為可數據化、可追蹤、可預測的智慧管理流程。
+          </p>
+        </div>
+
+        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">🔎</div>
+            <h3 class="text-lg font-black text-slate-900">客製化物料管理需求評估</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">盤點企業現況、痛點與導入限制，建立更貼近現場的改善方向。</p>
+          </article>
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">📊</div>
+            <h3 class="text-lg font-black text-slate-900">企業內部消耗與領料流程分析</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">釐清耗材流向、領料節點與管理漏洞，找出可量化改善空間。</p>
+          </article>
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">⚙️</div>
+            <h3 class="text-lg font-black text-slate-900">領料工作流程自動化設計</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">將紙本、人工、分散紀錄轉為可追蹤的自動化管理流程。</p>
+          </article>
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">🤖</div>
+            <h3 class="text-lg font-black text-slate-900">AI 領料與耗材分析輔助</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">透過資料分析辨識異常消耗、重複領用與高風險耗材項目。</p>
+          </article>
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">📈</div>
+            <h3 class="text-lg font-black text-slate-900">數據分析與預測模型建立</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">將歷史消耗資料轉化為補貨、庫存與採購決策依據。</p>
+          </article>
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">🧠</div>
+            <h3 class="text-lg font-black text-slate-900">物料管理知識庫建置</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">建立企業可累積、可查詢、可傳承的內部管理知識系統。</p>
+          </article>
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">🚀</div>
+            <h3 class="text-lg font-black text-slate-900">從 0 到 1 的 AI 團隊建置顧問</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">協助企業規劃 AI 角色、資料流程與內部導入能力。</p>
+          </article>
+          <article class="fade-up premium-card rounded-3xl p-6">
+            <div class="text-3xl mb-5">🧩</div>
+            <h3 class="text-lg font-black text-slate-900">AI 導入需求設計與專案規劃</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">把模糊需求變成可執行規格，降低 AI 導入失敗與溝通成本。</p>
+          </article>
+        </div>
+
+        <div class="fade-up mt-14 glass rounded-[2rem] p-7 md:p-10">
+          <div class="grid lg:grid-cols-[0.8fr_1.2fr] gap-8 items-center">
+            <div>
+              <h3 class="text-2xl md:text-3xl font-black text-slate-900">企業能獲得的不只是工具，而是管理能力升級</h3>
+              <p class="mt-4 text-slate-600 leading-8 font-medium">AI 導入的關鍵不是追逐技術，而是讓企業能用更少的人力、更清楚的資料、更精準的決策，持續改善物料管理效率。</p>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">降低耗材浪費</div>
+              <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">提高領料效率</div>
+              <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">建立可追蹤管理流程</div>
+              <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">降低缺料與重複採購風險</div>
+              <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">將經驗管理轉為數據決策</div>
+              <div class="rounded-2xl bg-white/70 border border-blue-100 p-4 font-bold text-slate-700">建立 AI 應用能力</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cases -->
+    <section id="cases" class="py-24 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="fade-up max-w-3xl">
+          <div class="section-label mb-5">Case Scenarios</div>
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">以情境出發，讓改善方向<span class="gradient-text">更容易落地</span></h2>
+          <p class="mt-6 text-lg leading-9 text-slate-600 font-medium">
+            以下以案例型情境呈現，不虛構具名客戶；重點在於展示企業常見問題、可行解法與預期效益。
+          </p>
+        </div>
+
+        <div class="mt-14 grid lg:grid-cols-3 gap-6">
+          <article class="fade-up premium-card rounded-[2rem] p-7">
+            <div class="flex items-center justify-between gap-4 mb-6">
+              <div class="w-14 h-14 rounded-3xl bg-blue-50 flex items-center justify-center text-2xl">🏭</div>
+              <span class="text-xs font-black text-techBlue bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full">Manufacturing</span>
+            </div>
+            <h3 class="text-2xl font-black text-slate-900">製造業耗材領用流程優化</h3>
+            <div class="mt-6 space-y-4 text-slate-600 leading-7 font-medium">
+              <p><strong class="text-slate-900">問題情境：</strong>耗材領用依賴人工登記，現場常出現紀錄不完整、責任不清與重複領用。</p>
+              <p><strong class="text-slate-900">解決方式：</strong>重新設計領料流程，導入身份辨識、領用紀錄與異常消耗追蹤。</p>
+              <p><strong class="text-slate-900">預期效益：</strong>提高領料透明度，降低耗材浪費與管理追查成本。</p>
+              <p><strong class="text-slate-900">方法：</strong>流程盤點、資料欄位設計、異常規則定義。</p>
+            </div>
+          </article>
+
+          <article class="fade-up premium-card rounded-[2rem] p-7">
+            <div class="flex items-center justify-between gap-4 mb-6">
+              <div class="w-14 h-14 rounded-3xl bg-purple-50 flex items-center justify-center text-2xl">🧰</div>
+              <span class="text-xs font-black text-premiumPurple bg-purple-50 border border-purple-100 px-3 py-1.5 rounded-full">Data Insight</span>
+            </div>
+            <h3 class="text-2xl font-black text-slate-900">工具與物料使用數據分析</h3>
+            <div class="mt-6 space-y-4 text-slate-600 leading-7 font-medium">
+              <p><strong class="text-slate-900">問題情境：</strong>工具與耗材使用資料分散，主管難以判斷實際使用量與異常消耗來源。</p>
+              <p><strong class="text-slate-900">解決方式：</strong>整合領用資料，建立部門、品項、人員與時間維度分析。</p>
+              <p><strong class="text-slate-900">預期效益：</strong>讓管理者掌握消耗趨勢，支援採購與管理改善。</p>
+              <p><strong class="text-slate-900">方法：</strong>資料清理、指標設計、視覺化儀表板。</p>
+            </div>
+          </article>
+
+          <article class="fade-up premium-card rounded-[2rem] p-7">
+            <div class="flex items-center justify-between gap-4 mb-6">
+              <div class="w-14 h-14 rounded-3xl bg-emerald-50 flex items-center justify-center text-2xl">🔮</div>
+              <span class="text-xs font-black text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1.5 rounded-full">Forecasting</span>
+            </div>
+            <h3 class="text-2xl font-black text-slate-900">AI 輔助庫存與消耗預測模型</h3>
+            <div class="mt-6 space-y-4 text-slate-600 leading-7 font-medium">
+              <p><strong class="text-slate-900">問題情境：</strong>補貨依賴經驗判斷，容易造成缺料、呆滯庫存或重複採購。</p>
+              <p><strong class="text-slate-900">解決方式：</strong>根據歷史領用、季節性、工作量與安全庫存建立預測邏輯。</p>
+              <p><strong class="text-slate-900">預期效益：</strong>提升補貨準確度，降低庫存壓力與停工風險。</p>
+              <p><strong class="text-slate-900">方法：</strong>特徵工程、預測模型、補貨建議規則。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights" class="py-24 px-4 relative">
+      <div class="max-w-7xl mx-auto">
+        <div class="fade-up max-w-3xl mx-auto text-center">
+          <div class="section-label mb-5">Technical Insights</div>
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">把複雜技術，轉化為企業看得懂的<span class="gradient-text">管理觀點</span></h2>
+          <p class="mt-6 text-lg leading-9 text-slate-600 font-medium">
+            技術觀點不只是分享知識，而是協助企業理解 AI、資料分析與流程自動化如何真正進入現場管理。
+          </p>
+        </div>
+
+        <div class="mt-14 grid lg:grid-cols-3 gap-6">
+          <article class="fade-up premium-card rounded-[2rem] overflow-hidden">
+            <div class="h-44 bg-gradient-to-br from-blue-100 via-white to-purple-100 relative">
+              <div class="absolute inset-6 rounded-3xl border border-blue-200/70 bg-white/40 backdrop-blur-sm flex items-center justify-center">
+                <i class="fas fa-brain text-5xl text-blue-600"></i>
+              </div>
+            </div>
+            <div class="p-7">
+              <div class="text-xs font-black text-techBlue uppercase tracking-wider">AI Strategy</div>
+              <h3 class="mt-3 text-2xl font-black text-slate-900">AI 如何改變工廠物料管理？</h3>
+              <p class="mt-4 text-slate-600 leading-7 font-medium">從耗材流向、領用紀錄到庫存預測，AI 能協助企業把現場經驗轉化為可分析的管理資產。</p>
+              <button class="mt-6 text-techBlue font-black hover:text-emerald-700 transition-colors">閱讀更多 →</button>
+            </div>
+          </article>
+
+          <article class="fade-up premium-card rounded-[2rem] overflow-hidden">
+            <div class="h-44 bg-gradient-to-br from-purple-100 via-white to-emerald-100 relative">
+              <div class="absolute inset-6 rounded-3xl border border-purple-200/70 bg-white/40 backdrop-blur-sm flex items-center justify-center">
+                <i class="fas fa-robot text-5xl text-purple-600"></i>
+              </div>
+            </div>
+            <div class="p-7">
+              <div class="text-xs font-black text-premiumPurple uppercase tracking-wider">Automation</div>
+              <h3 class="mt-3 text-2xl font-black text-slate-900">從人工領料到智慧化流程：企業升級的第一步</h3>
+              <p class="mt-4 text-slate-600 leading-7 font-medium">流程自動化的核心不是取代人，而是減少重複工作、降低錯誤，讓管理者看見真正的問題。</p>
+              <button class="mt-6 text-techBlue font-black hover:text-emerald-700 transition-colors">閱讀更多 →</button>
+            </div>
+          </article>
+
+          <article class="fade-up premium-card rounded-[2rem] overflow-hidden">
+            <div class="h-44 bg-gradient-to-br from-emerald-100 via-white to-blue-100 relative">
+              <div class="absolute inset-6 rounded-3xl border border-emerald-200/70 bg-white/40 backdrop-blur-sm flex items-center justify-center">
+                <i class="fas fa-chart-line text-5xl text-emerald-600"></i>
+              </div>
+            </div>
+            <div class="p-7">
+              <div class="text-xs font-black text-emerald-700 uppercase tracking-wider">Data Model</div>
+              <h3 class="mt-3 text-2xl font-black text-slate-900">為什麼物料管理需要數據分析與預測模型？</h3>
+              <p class="mt-4 text-slate-600 leading-7 font-medium">當企業能預測未來需求，就能降低缺料、重複採購與安全庫存過高所帶來的成本壓力。</p>
+              <button class="mt-6 text-techBlue font-black hover:text-emerald-700 transition-colors">閱讀更多 →</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Solutions -->
+    <section id="solutions" class="py-24 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="fade-up max-w-3xl mx-auto text-center">
+          <div class="section-label mb-5">Core Solutions</div>
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">核心產品與技術<span class="gradient-text">解決方案</span></h2>
+          <p class="mt-6 text-lg leading-9 text-slate-600 font-medium">
+            我們提供完整的工具管理與資產追蹤解決方案，協助企業從人工控管升級為自動化、可視化的智慧系統。
+          </p>
+        </div>
+
+        <div class="mt-14 grid lg:grid-cols-3 gap-6">
+          <article class="fade-up premium-card rounded-[2rem] p-7">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-3xl bg-blue-50 flex items-center justify-center text-2xl animate-spin" style="animation-duration: 8s;">
+                <i class="fas fa-gears text-techBlue"></i>
+              </div>
+              <span class="text-xs font-black text-techBlue bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full">Tool Management</span>
+            </div>
+            <h3 class="text-xl font-black text-slate-900">工廠刀具管理解決方案</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">從人工控管到自動化管理的完整升級</p>
+            <div class="mt-6 space-y-4 text-slate-600 leading-7 font-medium text-sm">
+              <p>在多數製造現場中，刀具管理往往被視為日常作業的一部分，但實際上，它直接影響著生產效率、加工品質與整體成本控制。</p>
+              <p>當刀具無法即時追蹤、庫存數據不準確、壽命管理依賴經驗時，不僅會造成不必要的浪費，更可能導致停機、延誤交期甚至工件報廢。</p>
+              <p>透過系統化的刀具管理解決方案，企業可以將原本分散的流程整合為可視化、可控管的管理機制，進一步提升整體營運效率。</p>
+            </div>
+            <div class="mt-8">
+              <a href="https://smartvending.com.tw/zh-TW/solutions/tool-management-solution" target="_blank" rel="noopener" class="inline-flex items-center text-techBlue font-black hover:text-emerald-700 transition-colors">
+                了解更多 <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="fade-up premium-card rounded-[2rem] p-7">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-3xl bg-purple-50 flex items-center justify-center text-2xl" style="animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">
+                <i class="fas fa-network-wired text-premiumPurple"></i>
+              </div>
+              <span class="text-xs font-black text-premiumPurple bg-purple-50 border border-purple-100 px-3 py-1.5 rounded-full">Smart Cabinet</span>
+            </div>
+            <h3 class="text-xl font-black text-slate-900">製造業智慧工具管理系統</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">智慧工具櫃完整解決方案</p>
+            <div class="mt-6 space-y-4 text-slate-600 leading-7 font-medium text-sm">
+              <p>智慧工具櫃解決工具遺失、責任不清與人工盤點失控問題。</p>
+              <p>透過智慧工具櫃與工具櫃管理系統整合，建立完整的工具追蹤系統（Tool Management System），實現工具借還自動化、RFID 工具管理與即時庫存控管。</p>
+              <p>協助製造業落實數據化工具管理，提升效率、降低成本、強化管理透明度。</p>
+            </div>
+            <div class="mt-8">
+              <a href="https://smartvending.com.tw/zh-TW/solutions/tool-management-system-manufacturing" target="_blank" rel="noopener" class="inline-flex items-center text-techBlue font-black hover:text-emerald-700 transition-colors">
+                了解更多 <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="fade-up premium-card rounded-[2rem] p-7">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-3xl bg-emerald-50 flex items-center justify-center text-2xl" style="animation: bounce 2s infinite;">
+                <i class="fas fa-satellite text-mint"></i>
+              </div>
+              <span class="text-xs font-black text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1.5 rounded-full">RFID Tracking</span>
+            </div>
+            <h3 class="text-xl font-black text-slate-900">RFID 智慧工具與資產管理解決方案</h3>
+            <p class="mt-3 text-slate-600 leading-7 font-medium">無線射頻識別技術應用</p>
+            <div class="mt-6 space-y-4 text-slate-600 leading-7 font-medium text-sm">
+              <p>透過 RFID（無線射頻識別）技術，自動追蹤工具、設備與物料流動。</p>
+              <p>打造即時可視化、自動化與可追溯的資產管理系統，協助製造業提升效率、降低成本並強化管理透明度。</p>
+              <p>實現工具全生命週期追蹤、智慧庫存管理與數據驅動決策。</p>
+            </div>
+            <div class="mt-8">
+              <a href="https://smartvending.com.tw/zh-TW/solutions/rfid-asset-tracking-solution" target="_blank" rel="noopener" class="inline-flex items-center text-techBlue font-black hover:text-emerald-700 transition-colors">
+                了解更多 <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Community Links -->
+    <section id="community" class="py-20 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="fade-up">
+          <div class="glass rounded-[2rem] p-8 md:p-12">
+            <div class="mb-8">
+              <div class="text-xs font-black text-slate-500 uppercase tracking-wider">External Dependencies</div>
+              <h3 class="mt-3 text-2xl md:text-3xl font-black text-slate-900">多元社群與連接</h3>
+              <p class="mt-2 text-slate-600 font-medium">在我們的社群平台上追蹤最新動態、技術分享與行業洞察</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <!-- LINE -->
+              <a href="https://aistudy.pse.is/linemd" target="_blank" rel="noopener" class="group premium-card rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fab fa-line text-emerald-600"></i>
+                </div>
+                <div class="font-black text-slate-900">LINE</div>
+                <div class="text-xs text-slate-500 font-semibold mt-1">@Bauer</div>
+              </a>
+
+              <!-- Facebook -->
+              <a href="https://www.facebook.com/BauerSmartVending/" target="_blank" rel="noopener" class="group premium-card rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fab fa-facebook-f text-blue-600"></i>
+                </div>
+                <div class="font-black text-slate-900">Facebook</div>
+                <div class="text-xs text-slate-500 font-semibold mt-1">Bauer Smart Vending</div>
+              </a>
+
+
+
+              <!-- GitHub -->
+              <a href="https://github.com/bauersmartvending-boop" target="_blank" rel="noopener" class="group premium-card rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fab fa-github text-slate-900"></i>
+                </div>
+                <div class="font-black text-slate-900">GitHub</div>
+                <div class="text-xs text-slate-500 font-semibold mt-1">bauersmartvending-boop</div>
+              </a>
+
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/bauersmartvending/" target="_blank" rel="noopener" class="group premium-card rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                <div class="w-14 h-14 rounded-2xl bg-pink-50 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                  <i class="fab fa-instagram text-pink-600"></i>
+                </div>
+                <div class="font-black text-slate-900">Instagram</div>
+                <div class="text-xs text-slate-500 font-semibold mt-1">@bauersmartvending</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="inquiry-form" class="py-20 px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="fade-up">
+          <div class="glass rounded-[2rem] p-8 md:p-12 border border-blue-100">
+            <div class="relative">
+              <div class="absolute -top-4 -left-4 w-32 h-32 bg-blue-200/30 rounded-full blur-3xl"></div>
+              <div class="absolute -bottom-8 -right-8 w-40 h-40 bg-purple-200/25 rounded-full blur-3xl"></div>
+              
+              <div class="relative z-10">
+                <div class="text-center mb-8">
+                  <div class="text-xs font-black text-techBlue uppercase tracking-wider">Get In Touch</div>
+                  <h2 class="mt-3 text-3xl md:text-4xl font-black text-slate-900">告訴我你的需求</h2>
+                  <p class="mt-4 text-slate-600 font-medium max-w-2xl mx-auto">
+                    填寫簡單的需求表單，讓我更了解你的企業挑戰，我們將快速評估並提供客製化的解決方案建議。
+                  </p>
+                </div>
+
+                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <div class="hidden sm:flex items-center gap-3 text-slate-600 font-semibold">
+                    <i class="fas fa-check-circle text-mint text-xl"></i>
+                    <span>5分鐘快速填寫</span>
+                  </div>
+                  <div class="hidden sm:block w-1 h-6 bg-slate-200 rounded-full"></div>
+                  <div class="hidden sm:flex items-center gap-3 text-slate-600 font-semibold">
+                    <i class="fas fa-check-circle text-mint text-xl"></i>
+                    <span>無需複雜資料</span>
+                  </div>
+                  <div class="hidden sm:block w-1 h-6 bg-slate-200 rounded-full"></div>
+                  <div class="hidden sm:flex items-center gap-3 text-slate-600 font-semibold">
+                    <i class="fas fa-check-circle text-mint text-xl"></i>
+                    <span>24小時回覆</span>
+                  </div>
+                </div>
+
+                <div class="mt-10 flex justify-center">
+                  <a href="https://forms.gle/rM7Sv2E6T2C3jkuG9" target="_blank" rel="noopener" class="btn-primary min-h-[60px] inline-flex items-center justify-center gap-3 rounded-2xl border border-blue-300 bg-gradient-to-r from-blue-50 to-white/85 px-9 py-5 text-techBlue font-black shadow-soft">
+                    <span>填寫需求表單</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+
+                <div class="mt-8 pt-8 border-t border-slate-200/50 text-center">
+                  <p class="text-xs text-slate-500 font-semibold">
+                    <i class="fas fa-lock text-mint mr-2"></i>
+                    我們重視你的隱私。所有資訊將加密保存，僅用於評估你的需求。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section id="contact" class="py-24 px-4">
+      <div class="max-w-6xl mx-auto fade-up">
+        <div class="relative overflow-hidden rounded-[2.5rem] border border-blue-100 bg-white/80 shadow-glow backdrop-blur-2xl p-8 md:p-14 text-center">
+          <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-blue-200/40 blur-3xl"></div>
+          <div class="absolute -bottom-28 -right-24 w-80 h-80 rounded-full bg-emerald-200/45 blur-3xl"></div>
+          <div class="absolute top-20 right-20 w-44 h-44 rounded-full bg-purple-200/40 blur-3xl"></div>
+
+          <div class="relative z-10">
+            <div class="section-label mb-6">Book A Consultation</div>
+            <h2 class="text-3xl md:text-6xl font-black tracking-tight leading-tight text-slate-950">
+              準備好讓物料管理升級為<br class="hidden md:block" /> <span class="gradient-text">AI 驅動的決策系統</span>了嗎？
+            </h2>
+            <p class="mt-7 max-w-3xl mx-auto text-lg md:text-xl leading-9 text-slate-600 font-medium">
+              如果你的企業正在面臨耗材浪費、領料流程混亂、庫存不準或缺乏數據分析能力，現在就是導入智慧化管理的最佳時機。
+            </p>
+
+            <div class="mt-10 flex justify-center">
+              <a href="https://calendar.app.google/iko9UDFH4o5BvKEm9" target="_blank" rel="noopener" class="btn-primary min-h-[64px] inline-flex items-center justify-center rounded-2xl border border-blue-300 bg-white/85 px-9 py-5 text-techBlue font-black shadow-soft text-lg">
+                <span>立即預約諮詢</span>
+              </a>
+            </div>
+
+            <div class="mt-10 grid sm:grid-cols-3 gap-4 text-left">
+              <div class="rounded-3xl bg-white/70 border border-blue-100 p-5">
+                <div class="font-black text-slate-900">01. 釐清痛點</div>
+                <div class="mt-2 text-sm leading-6 text-slate-500 font-medium">從耗材、領料、庫存與資料現況開始診斷。</div>
+              </div>
+              <div class="rounded-3xl bg-white/70 border border-purple-100 p-5">
+                <div class="font-black text-slate-900">02. 設計方案</div>
+                <div class="mt-2 text-sm leading-6 text-slate-500 font-medium">把需求轉化為流程、資料與 AI 導入規格。</div>
+              </div>
+              <div class="rounded-3xl bg-white/70 border border-emerald-100 p-5">
+                <div class="font-black text-slate-900">03. 建立能力</div>
+                <div class="mt-2 text-sm leading-6 text-slate-500 font-medium">讓企業擁有可持續優化的管理能力。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="px-4 pb-8">
+    <div class="max-w-7xl mx-auto glass rounded-[2rem] p-6 md:p-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+        <div>
+          <div class="text-xl font-black text-slate-900">Brian Weng / 翁秉達</div>
+          <div class="mt-1 text-sm font-bold text-techBlue">AI Material Management Consultant</div>
+          <p class="mt-3 text-slate-500 font-medium max-w-xl">讓物料管理不再只是庫存紀錄，而是企業效率提升的起點。</p>
+        </div>
+        <div class="text-sm text-slate-500 font-semibold md:text-right">
+          <div>© <span id="year"></span> Brian Weng. All rights reserved.</div>
+          <div class="mt-2">AI 科技 × 物料管理 × 工業流程自動化 × 數據分析</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // Typewriter effect
+    const typewriter = document.getElementById('typewriter');
+    const phrase = 'Until Material Data Science Becomes Common Sense';
+    let index = 0;
+    let deleting = false;
+
+    function typeLoop() {
+      if (!deleting) {
+        typewriter.textContent = phrase.slice(0, index + 1);
+        index++;
+        if (index === phrase.length) {
+          deleting = true;
+          setTimeout(typeLoop, 1800);
+          return;
+        }
+      } else {
+        typewriter.textContent = phrase.slice(0, index - 1);
+        index--;
+        if (index === 0) {
+          deleting = false;
+        }
+      }
+
+      const speed = deleting ? 36 : 68;
+      setTimeout(typeLoop, speed);
+    }
+
+    typeLoop();
+
+    // Scroll reveal with Intersection Observer
+    const revealItems = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealItems.forEach(item => observer.observe(item));
+
+    // Dynamic footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth anchor offset helper for fixed nav
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (event) {
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        if (!target) return;
+
+        event.preventDefault();
+        const navOffset = 96;
+        const top = target.getBoundingClientRect().top + window.scrollY - navOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
